@@ -1,0 +1,2 @@
+# animangazineapp
+Animangazine App
