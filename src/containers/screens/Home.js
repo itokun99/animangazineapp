@@ -7,12 +7,14 @@ import {
     FlatList,
     Image,
     ScrollView,
-    TouchableOpacity
+    TouchableOpacity,
+    RefreshControl
 } from 'react-native';
 import AppStyle from '../../styles/Styles';
 import API from '../../services/Service';
 import AnimeCard from '../../components/AnimeCard';
 import HomeScreenSkeleton from '../../components/HomeScreenSkeleton';
+import Toast, {DURATION} from 'react-native-easy-toast';
 
 class Home extends Component {
     constructor(props){
@@ -23,6 +25,7 @@ class Home extends Component {
             isLoadMore : false,
             isNoLoadMore : false,
             limit : 6,
+            isRefresh : false,
         }
     }
 
@@ -43,11 +46,14 @@ class Home extends Component {
                         isNoLoadMore : true,
                     }, action)  
                 }
+                if(result.statusCode === 503){
+                    this.refs.toast.show(result.message);
+                }
             }
         })
     }
 
-    loadFirstData = () => {
+    loadFirstData = (action = null) => {
         let params = {
             limit : this.state.limit,
             offset : 0,
@@ -58,8 +64,23 @@ class Home extends Component {
             setTimeout(() => {
                 this.setState({
                     isLoading : false
-                })
+                }, action)
             },1000)
+        })
+    }
+
+    onRefresh = () => {
+        this.setState({
+            isRefresh : true,
+            isLoading : true,
+            isNoLoadMore : false,
+            animes : [],
+        }, () => {
+            this.loadFirstData(() => {
+                this.setState({
+                    isRefresh : false,
+                })
+            })            
         })
     }
 
@@ -88,9 +109,11 @@ class Home extends Component {
             data : value
         })
     }
+    isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {   return layoutMeasurement.height + contentOffset.y 
+        >= contentSize.height - 50; 
+    }
 
     componentDidMount(){
-        // this.getAnimesList()
         this.loadFirstData();
     }
 
@@ -98,7 +121,22 @@ class Home extends Component {
 
     render(){
         return(
-            <ScrollView style={AppStyle.homescreen.container}>
+            <>
+            <ScrollView 
+                contentContainerStyle={AppStyle.homescreen.container} 
+                onScroll={({nativeEvent}) => {
+                    if(this.isCloseToBottom(nativeEvent) && !this.state.isNoLoadMore){
+                        this.loadMoreData()
+                    }
+                }}
+                refreshControl = {
+                    <RefreshControl
+                        refreshing={this.state.isRefresh}
+                        onRefresh={this.onRefresh}
+                    />
+                }
+                
+            >
                 <StatusBar barStyle="light-content" backgroundColor={AppStyle.color.base} />
                 <SafeAreaView>
                     {
@@ -155,6 +193,8 @@ class Home extends Component {
                     }
                 </SafeAreaView>
             </ScrollView>
+            <Toast ref='toast' />
+            </>
         )
     }
 }

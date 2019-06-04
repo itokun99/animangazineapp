@@ -43,7 +43,7 @@ export const request = (path, method, data, formData) => {
             } else {
                 let netFailed = {
                     status : false,
-                    code : 503,
+                    statusCode : 503,
                     message : "Koneksi internet error!"
                 }
                 resolve(netFailed);

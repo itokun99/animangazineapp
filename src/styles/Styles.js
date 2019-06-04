@@ -13,11 +13,40 @@ const global = StyleSheet.create({
     }
 })
 
+const sidebar = StyleSheet.create({
+    container : {
+
+    },
+    header : {
+        position : "relative",
+        backgroundColor : color.base,
+        height : 150,
+    },
+    menu : {
+        paddingVertical : 5
+    },
+    list : {
+        paddingVertical : 14,
+        paddingHorizontal : 24,
+        flexDirection : 'row',
+        alignItems : "center"
+    },
+    listIcon : {
+        marginRight : 24
+    },
+    listTitle : {
+        fontSize : 18,
+        fontWeight : "600",
+        color : "#888"
+    }
+})
+
 
 export const homescreen  = StyleSheet.create({
     container : {
         backgroundColor : "#f5f5f5",
         paddingHorizontal : 14,
+        justifyContent : "center"
     },
     bigBannerContainer : {
         padding : 24,
@@ -164,6 +193,7 @@ const detail = StyleSheet.create({
     sectionHeader : {
         position : 'relative',
         height : 250,
+        marginBottom : 14,
     },
     cover : {
         width : '100%',
@@ -189,7 +219,64 @@ const detail = StyleSheet.create({
     floatingTitleText : {
         fontSize : 20,
         fontWeight : "600",
-        color : "#222"}
+        color : "#222"
+    },
+    sectionBodyTitle : {
+        paddingHorizontal : 14,
+        paddingVertical : 14,
+        borderColor : "rgba(0,0,0,0.1)",
+        borderTopWidth : 0.5,
+    },
+    sectionBodyTitleText : {
+        fontSize : 18,
+        fontWeight : "600",
+    },
+    sectionBodyDesc : {
+        position : "relative",
+        padding : 24,
+        backgroundColor : "rgba(0,0,0,0.1)"
+    },
+    sectionBodyDescText : {
+        fontSize : 16,
+        lineHeight : 26
+    },
+    rowInfo : {
+        flexDirection : "row",
+        justifyContent : "space-between"
+    },
+    infoLeft : {
+        width : Dimensions.get('window').width - 200
+    },
+    infoRight : {
+        position : 'relative',
+        width : 150,
+        paddingRight : 14,
+    },
+    scoreInfo : {
+        position : 'absolute',
+        flexDirection : "row",
+        justifyContent : "center",
+        alignItems : "center",
+        top: 0,
+        right : 0,
+        paddingHorizontal : 14,
+        paddingVertical : 7,
+        backgroundColor : 'rgba(0,0,0,0.5)',
+        borderRadius : 8,
+    },
+    infoList : {
+        flexDirection : "row",
+        justifyContent : "flex-start",
+    },
+    listLeft : {
+        width : 70,
+        fontSize : 16,
+        lineHeight : 26,
+    },
+    listRight : {
+        fontSize : 16,
+        lineHeight : 26,
+    }
 })
 
 const animeCard = StyleSheet.create({
@@ -238,12 +325,29 @@ const animeCard = StyleSheet.create({
         paddingHorizontal : 4,
         backgroundColor : "rgba(0,0,0,0.4)",
         borderRadius : 8
+    },
+    cardPlayThumb : {
+        width : 200,
+        height : 0,
+        paddingBottom : '62.25%',
+        backgroundColor : "#ddd"
+    },
+    epsTag : {
+        position : "absolute",
+        paddingVertical : 4,
+        paddingHorizontal : 8,
+        color : "#fff",
+        borderRadius : 4,
+        bottom : 10,
+        right : 10,
+        backgroundColor : color.base
     }
 })
 
 
 const AppStyle = {
     color,
+    sidebar,
     homescreen,
     homeScreenSkeleton,
     detail,

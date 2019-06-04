@@ -10,12 +10,13 @@ import AppStyle from '../styles/Styles';
 import DrawerIcon from '../components/DrawerIcon';
 import Detail from '../containers/screens/Detail';
 import {fromRight} from 'react-navigation-transitions';
+import Sidebar from '../containers/screens/Sidebar';
 
 const HomeStack = createStackNavigator({
     Home : { 
         screen : Home,
         navigationOptions : ( navigation ) => ({
-            title : "Anime Mangazine",
+            title : "Dashboard",
             headerLeft :  <DrawerIcon {...navigation} />
         })
     },
@@ -37,6 +38,8 @@ const HomeStack = createStackNavigator({
 
 const AppDrawer = createDrawerNavigator({
     Home : HomeStack
+}, {
+    contentComponent : Sidebar
 })
 
 const AppSwitcher = createSwitchNavigator({

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Image, SafeAreaView, FlatList } from 'react-native';
+import { View, Text, ScrollView, Image, SafeAreaView, FlatList, TextInput } from 'react-native';
 import AppStyle from '../../styles/Styles';
-
+import {Collapse, CollapseBody, CollapseHeader} from 'accordion-collapse-react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import AnimeEpsCard from '../../components/AnimeEpsCard';
 class Detail extends Component {
     constructor(props){
         super(props);
@@ -39,7 +41,7 @@ class Detail extends Component {
     }
 
     componentDidMount(){
-
+        
     }
 
     render(){
@@ -64,7 +66,87 @@ class Detail extends Component {
                             </View>
                         </View>
                         <View style={AppStyle.detail.sectionBody}>
-                            
+                            <Collapse>
+                                <CollapseHeader>
+                                    <View style={AppStyle.detail.sectionBodyTitle}>
+                                        <Text style={AppStyle.detail.sectionBodyTitleText}>Informasi</Text>
+                                    </View>
+                                </CollapseHeader>
+                                <CollapseBody>
+                                    <View style={AppStyle.detail.sectionBodyDesc}>
+                                        <View style={AppStyle.detail.rowInfo}>
+                                            <View style={AppStyle.detail.infoLeft}>
+                                                <View style={AppStyle.detail.infoList}>
+                                                    <Text style={AppStyle.detail.listLeft}>Status</Text><Text style={AppStyle.detail.listRight}>{this.state.anime.anime_status}</Text>
+                                                </View>
+                                                <View style={AppStyle.detail.infoList}>
+                                                    <Text style={AppStyle.detail.listLeft}>Episode</Text><Text style={AppStyle.detail.listRight}>{this.state.anime.anime_episode}</Text>
+                                                </View>
+                                                <View style={AppStyle.detail.infoList}>
+                                                    <Text style={AppStyle.detail.listLeft}>Durasi</Text><Text style={AppStyle.detail.listRight}>{this.state.anime.anime_duration}</Text>
+                                                </View>
+                                                <View style={AppStyle.detail.infoList}>
+                                                    <Text style={AppStyle.detail.listLeft}>Rilis</Text><Text style={AppStyle.detail.listRight}>{this.state.anime.anime_release}</Text>
+                                                </View>
+                                                <View style={AppStyle.detail.infoList}>
+                                                    <Text style={AppStyle.detail.listLeft}>Studio</Text><Text style={AppStyle.detail.listRight}>{this.state.anime.anime_studios}</Text>
+                                                </View>
+                                                <View style={AppStyle.detail.infoList}>
+                                                    <Text style={AppStyle.detail.listLeft}>Tipe</Text><Text style={AppStyle.detail.listRight}>{this.state.anime.anime_type}</Text>
+                                                </View>
+                                                <View style={AppStyle.detail.infoList}>
+                                                    <Text style={AppStyle.detail.listLeft}>Genre</Text><Text style={AppStyle.detail.listRight}>{this.state.anime.anime_genre}</Text>
+                                                </View>
+
+                                            </View>
+                                            <View style={AppStyle.detail.infoRight}>
+                                                <View style={AppStyle.detail.scoreInfo}>
+                                                    <Icon name="star" size={24} style={{marginRight : 10}} color="#fff" />
+                                                    <Text style={{fontSize : 26, fontWeight : "600", color : "#fff"}}>{this.state.anime.anime_score}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                    </View>
+                                </CollapseBody>
+                            </Collapse>
+
+                            <Collapse>
+                                <CollapseHeader>
+                                    <View style={AppStyle.detail.sectionBodyTitle}>
+                                        <Text style={AppStyle.detail.sectionBodyTitleText}>Sinopsis</Text>
+                                    </View>
+                                </CollapseHeader>
+                                <CollapseBody>
+                                    <View style={AppStyle.detail.sectionBodyDesc}>
+                                        <Text style={AppStyle.detail.sectionBodyDescText}>{this.state.anime.anime_sinopsis.replace("& quot;", '"').replace("& quot;", '"').replace("& mdash;", '--')}</Text>
+                                    </View>
+                                </CollapseBody>
+                            </Collapse>
+
+                            <Collapse isCollapsed= {true}>
+                                <CollapseHeader>
+                                    <View style={AppStyle.detail.sectionBodyTitle}>
+                                        <Text style={AppStyle.detail.sectionBodyTitleText}>Playlist</Text>
+                                    </View>
+                                </CollapseHeader>
+                                <CollapseBody>
+                                    <ScrollView horizontal={true} style={{...AppStyle.detail.sectionBodyDesc, padding: 0}}>
+                                        {
+                                            this.state.playData.play360.length > 0 ?
+                                                this.state.playData.play360.map((value, index) => {
+                                                    return(
+                                                        <View key={index+1} style={{paddingVertical : 24, paddingLeft :24,  ...index === (this.state.playData.play360.length - 1) ? {paddingRight : 24} : null  }}>
+                                                            <AnimeEpsCard data={value} />
+                                                        </View>
+                                                    )
+                                                })
+                                            :
+                                            <View><Text>No Data</Text></View>
+                                        }
+                                    </ScrollView>
+                                </CollapseBody>
+                            </Collapse>
+
                         </View>
                         <View style={AppStyle.detail.sectionFooter}>
 

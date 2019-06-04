@@ -4,7 +4,7 @@ import AppStyle from '../styles/Styles';
 
 const DrawerIcon = (props) => {
     // console.warn(props)
-    return(
+    return (
         <TouchableOpacity onPress={() => props.navigation.openDrawer()} style={AppStyle.drawerIcon.wrapper}>
             <View style={AppStyle.drawerIcon.drawerItem}>
             </View>
