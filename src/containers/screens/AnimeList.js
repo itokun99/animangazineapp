@@ -14,11 +14,11 @@ import {
 import AppStyle from '../../styles/Styles';
 import API from '../../services/Service';
 import AnimeCard from '../../components/AnimeCard';
-import HomeScreenSkeleton from '../../components/HomeScreenSkeleton';
+import AnimeListSkeleton from '../../components/AnimeListSkeleton';
 import Toast, {DURATION} from 'react-native-easy-toast';
-import AnimeCard2 from '../../components/AnimeCard2';
 
-class Home extends Component {
+var interval = null;
+class AnimeList extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -26,7 +26,7 @@ class Home extends Component {
             isLoading : true,
             isLoadMore : false,
             isNoLoadMore : false,
-            limit : 6,
+            limit : 9999,
             isRefresh : false,
             landscape : false,
         }
@@ -78,12 +78,12 @@ class Home extends Component {
         })
     }
 
-    loadFirstData = (action = null) => {
+    loadFirstData = (action = null, offset = 0) => {
         let params = {
             limit : this.state.limit,
-            offset : 0,
-            listed : 'desc',
-            order : 'date_update'
+            offset : offset,
+            listed : 'asc',
+            order : 'anime_title'
         };
         this.getAnimesList(params, () => {
             setTimeout(() => {
@@ -104,6 +104,10 @@ class Home extends Component {
             this.loadFirstData(() => {
                 this.setState({
                     isRefresh : false,
+                }, () => {
+                    interval = setInterval(() => {
+                        this.loadMoreData()
+                    },1000)
                 })
             })            
         })
@@ -115,8 +119,8 @@ class Home extends Component {
         let params = {
             offset : offset,
             limit : this.state.limit,
-            order : 'date_update',
-            listed : 'desc',
+            order : 'anime_title',
+            listed : 'asc',
         }
         this.setState({
             isLoadMore : true,
@@ -124,29 +128,36 @@ class Home extends Component {
             this.getAnimesList(params, () => {
                 this.setState({
                     isLoadMore : false,
+                    isLoading : false,
                 })
             })
         })
     }
 
-    previewDetail = (value, currentVideo ) => {
-        this.props.navigation.push('Player', {
-            data : value,
-            currentVideo : currentVideo
+    previewDetail = (value) => {
+        this.props.navigation.push('Detail', {
+            data : value
         })
     }
-    
     isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {   return layoutMeasurement.height + contentOffset.y 
         >= contentSize.height - 50; 
     }
 
     componentDidMount(){
-        this.loadFirstData();
         this.checkOrientation();
+        interval = setInterval(() => {
+            this.loadMoreData()
+        },1000)
     }
 
     componentWillUnMount() {
         Dimensions.removeEventListener('change');
+    }
+
+    componentDidUpdate(nextProps, nextState){
+        if(this.state.isNoLoadMore === true){
+            clearInterval(interval)
+        }
     }
 
 
@@ -156,11 +167,11 @@ class Home extends Component {
             <>
             <ScrollView ref="rootView"
                 contentContainerStyle={AppStyle.homescreen.container} 
-                onScroll={({nativeEvent}) => {
-                    if(this.isCloseToBottom(nativeEvent) && !this.state.isNoLoadMore){
-                        this.loadMoreData()
-                    }
-                }}
+                // onScroll={({nativeEvent}) => {
+                //     if(this.isCloseToBottom(nativeEvent) && !this.state.isNoLoadMore){
+                //         this.loadMoreData()
+                //     }
+                // }}
                 refreshControl = {
                     <RefreshControl
                         refreshing={this.state.isRefresh}
@@ -173,7 +184,7 @@ class Home extends Component {
                 <SafeAreaView>
                     {
                         this.state.isLoading ?
-                        (<HomeScreenSkeleton />)
+                        (<AnimeListSkeleton />)
                         :
                         (<View style={AppStyle.homescreen.section}>
                             <View style={AppStyle.homescreen.sectionHeader}>
@@ -190,17 +201,11 @@ class Home extends Component {
                                         } }
                                         data = {this.state.animes}
                                         contentContainerStyle={{marginHorizontal : -7}}
-                                        numColumns = {this.state.landscape ? 2 : 1}
+                                        numColumns = {this.state.landscape ? 3  : 2}
                                         renderItem ={({item}) => {
-                                            // console.warn(item)
-                                            let currentVideo = {};
-                                            if(item.anime_play_data.play360.length > 0){
-                                                currentVideo = item.anime_play_data.play360[0]
-                                            }
                                             return(
-                                                <View style={{...AppStyle.homescreen.cardCol, ...this.state.landscape ? {width : '50%'} : {width : '100%'}}}>
-                                                    {/* <AnimeCard data={item} onPress={() => this.previewDetail(item)} /> */}
-                                                    <AnimeCard2 data={item} onPress={() => this.previewDetail(item, currentVideo)} />
+                                                <View style={{...AppStyle.homescreen.cardCol, ...this.state.landscape ? {width : '33.333333%'} : {width : '50%'}}}>
+                                                    <AnimeCard data={item} onPress={() => this.previewDetail(item)} />
                                                 </View>
                                             )
                                         }}
@@ -237,4 +242,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default AnimeList;

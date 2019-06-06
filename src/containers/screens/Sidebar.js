@@ -16,6 +16,9 @@ class Sidebar extends Component {
         super(props);
         // console.warn(props);
     }
+    navigateTo = (screen, params) => {
+        this.props.navigation.navigate(screen);
+    }
     render(){
         return(
             <ScrollView style={AppStyle.sidebar.container}>
@@ -24,11 +27,10 @@ class Sidebar extends Component {
                 </View>
                 
                 <View style={AppStyle.sidebar.menu}>
-                    <ListItem title="Dashboard" icon="home" /> 
-                    <ListItem title="Anime List" icon="th-list" /> 
-                    <ListItem title="Favorite" icon="star" /> 
-                    {/* <ListItem title="Genre" icon="tag" />  */}
-                    <ListItem title="Riwayat" icon="clock-o" />
+                    <ListItem title="Dashboard" icon="home" onPress={() => this.navigateTo('Home')} /> 
+                    {/* <ListItem title="Anime List" icon="th-list" onPress={() => this.navigateTo('AnimeList')} />  */}
+                    <ListItem title="Favorite" icon="star" onPress={() => this.navigateTo('Favorite')} />
+                    <ListItem title="Riwayat" icon="clock-o" onPress={() => this.navigateTo('History')} />
                     <View style={{height : 1, backgroundColor : "#ddd", marginVertical : 2}}></View>
                     <ListItem title="Request/Report" icon="comment-o" /> 
                     <ListItem title="Feedback" icon="thumbs-o-up" /> 

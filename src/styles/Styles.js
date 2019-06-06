@@ -8,15 +8,20 @@ export const color = {
 }
 
 const global = StyleSheet.create({
-    constainer : {
+    container : {
+        backgroundColor : "#f5f5f5",
+        paddingHorizontal : 14,
+        justifyContent : "center"
+    },
+})
 
+const favoritIcon = StyleSheet.create({
+    wrapper : {
+        marginRight : 18
     }
 })
 
 const sidebar = StyleSheet.create({
-    container : {
-
-    },
     header : {
         position : "relative",
         backgroundColor : color.base,
@@ -38,6 +43,21 @@ const sidebar = StyleSheet.create({
         fontSize : 18,
         fontWeight : "600",
         color : "#888"
+    }
+})
+
+const playerScreen = StyleSheet.create({
+    container : {
+        backgroundColor : "#f5f5f5",
+        // paddingHorizontal : 14,
+        justifyContent : "center"
+    },
+    videoSection : {
+        position: "relative",
+        backgroundColor : "#222"
+    },
+    playlistSection : {
+        
     }
 })
 
@@ -86,7 +106,7 @@ export const homescreen  = StyleSheet.create({
         paddingVertical : 8,
     },
     cardCol : {
-        width : '50%',
+        width : '100%',
         paddingHorizontal : 7,
         paddingBottom : 14,
     },
@@ -132,7 +152,7 @@ const homeScreenSkeleton = StyleSheet.create({
         flexWrap : "wrap"
     },
     col : {
-        width : '50%',
+        width : '100%',
         paddingHorizontal : 7,
         paddingBottom: 14,
     },
@@ -143,19 +163,19 @@ const homeScreenSkeleton = StyleSheet.create({
         backgroundColor : "#ddd",
         width :  "100%",
         height : 0,
-        paddingBottom : '120%',
+        paddingBottom : '62.25%',
         borderRadius : 6,
         marginBottom : 14,
     },
     text : {
-        width : "80%",
+        width : "50%",
         height : 25,
         borderRadius : 6,
         backgroundColor : "#ddd",
         marginBottom : 14,
     },
     text2 : {
-        width : "40%",
+        width : "20%",
         height : 25,
         borderRadius : 6,
         backgroundColor : "#ddd"
@@ -286,12 +306,20 @@ const animeCard = StyleSheet.create({
         borderWidth : 1,
         borderColor : 'rgba(0,0,0,0.1)',
         width  : '100%',
+        borderRadius : 8,
+        overflow : 'hidden'
     },
     cardPic : {
         position : 'relative',
         width : '100%',
         height : 0,
         paddingBottom : "130%",
+    },
+    cardPic2 : {
+        position : 'relative',
+        width : '100%',
+        height : 0,
+        paddingBottom : "62.25%",
     },
     cardBody : {
         position : "absolute",
@@ -301,12 +329,22 @@ const animeCard = StyleSheet.create({
         backgroundColor : "rgba(0,0,0,0.5)",
         width : "100%"
     },
+    cardBodyRow : {
+        flexDirection : 'row',
+        justifyContent : "space-between"
+    },
     cardTitle : {
         color : "#fff",
         fontSize : 14,
         fontWeight : "600",
         lineHeight : 18,
         marginBottom : 10,
+    },
+    cardTitle2 : {
+        color : "#fff",
+        fontSize : 16,
+        fontWeight : "600",
+        lineHeight : 24,
     },
     cardTag : {
         paddingVertical : 2,
@@ -347,8 +385,10 @@ const animeCard = StyleSheet.create({
 
 const AppStyle = {
     color,
+    favoritIcon,
     sidebar,
     homescreen,
+    playerScreen,
     homeScreenSkeleton,
     detail,
     drawerIcon,

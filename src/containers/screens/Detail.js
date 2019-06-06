@@ -4,6 +4,8 @@ import AppStyle from '../../styles/Styles';
 import {Collapse, CollapseBody, CollapseHeader} from 'accordion-collapse-react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AnimeEpsCard from '../../components/AnimeEpsCard';
+import FavoriteIcon from '../../components/FavoriteIcon';
+import { GlobalConsumer, Context } from '../../context/Context';
 class Detail extends Component {
     constructor(props){
         super(props);
@@ -158,4 +160,4 @@ class Detail extends Component {
     }
 }
 
-export default Detail;
+export default GlobalConsumer(Detail);

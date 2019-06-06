@@ -5,7 +5,7 @@ import AppStyle from '../styles/Styles';
 
 const ListItem = (props) => {
     return(
-        <TouchableNativeFeedback>
+        <TouchableNativeFeedback onPress={props.onPress}>
             <View style={AppStyle.sidebar.list}>
                 <View style={AppStyle.sidebar.listIcon}><Icon name={props.icon} size={24} color="#aaa" /></View>
                 <Text style={AppStyle.sidebar.listTitle}>{props.title}</Text>
